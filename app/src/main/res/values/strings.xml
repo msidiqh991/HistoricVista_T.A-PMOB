@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">T.A_PMOB</string>
+    <string name="started_title">Hello there!</string>
+    <string name="started_sub_title">
+        Explore historical and unique places in your city, discover interesting tourist destinations around you
+    </string>
+    <string name="Vector_image">History Illustration Image</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="login_title">Login to app</string>
+    <string name="login_subtitle">
+        <font color="#5915F3"><b>Welcome back!</b></font>
+        are you ready to take a trip?
+    </string>
+</resources>
