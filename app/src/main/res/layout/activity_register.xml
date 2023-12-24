@@ -71,7 +71,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/icon_password"
+        android:id="@+id/icon_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -81,6 +81,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_email"
         app:startIconDrawable="@drawable/ic_email"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailSubject"
+            style="@style/TextInputEditText"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_title_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        style="@style/loginSubtitle"
+        android:text="@string/text_title_password"
+        app:layout_constraintTop_toBottomOf="@id/icon_email"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/icon_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        style="@style/TextInputLayout"
+        android:hint="@string/text_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_password"
+        app:startIconDrawable="@drawable/ic_key"
         >
 
         <com.google.android.material.textfield.TextInputEditText
