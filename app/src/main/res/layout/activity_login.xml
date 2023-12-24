@@ -29,15 +29,60 @@
         app:layout_constraintTop_toBottomOf="@id/tv_login_title"
         />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tv_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/icon_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
+        style="@style/TextInputLayout"
+        android:hint="@string/icon_email_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_login_subtitle"
+        app:startIconDrawable="@drawable/ic_circle_account"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextInputEditText"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/icon_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        style="@style/TextInputLayout"
+        android:hint="@string/icon_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_email"
+        app:startIconDrawable="@drawable/ic_key"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            style="@style/TextInputEditText"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_forgot_pw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/forgot_pw"
+        android:textColor="@color/primary_color"
+        android:textStyle="bold"
+        android:textAlignment="textEnd"
+        style="@style/loginSubtitle"
+        app:layout_constraintTop_toBottomOf="@id/icon_password"
         />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

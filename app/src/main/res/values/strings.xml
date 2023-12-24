@@ -7,9 +7,12 @@
     <string name="Vector_image">History Illustration Image</string>
     <string name="btn_register">Register</string>
     <string name="btn_login">LOGIN</string>
-    <string name="login_title">Login to app</string>
+    <string name="login_title">Login to HistoricVista</string>
     <string name="login_subtitle">
         <font color="#5915F3"><b>Welcome back!</b></font>
         are you ready to take a trip?
     </string>
+    <string name="icon_email_text">Your email (ex: account@example.com)</string>
+    <string name="icon_password">Your password here ...</string>
+    <string name="forgot_pw">Forgot password?</string>
 </resources>
