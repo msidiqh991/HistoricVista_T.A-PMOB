@@ -1,24 +1,58 @@
 <resources>
     <string name="app_name">T.A_PMOB</string>
     <string name="started_title">Hello there!</string>
+    
     <string name="started_sub_title">
         Explore historical and unique places in your city, discover interesting tourist destinations around you
     </string>
+    
     <string name="Vector_image">History Illustration Image</string>
     <string name="btn_register">Register</string>
     <string name="btn_login">LOGIN</string>
     <string name="login_title">Login to HistoricVista</string>
+    
     <string name="login_subtitle">
         <font color="#5915F3"><b>Welcome back!</b></font>
         are you ready to take a trip?
     </string>
+    
     <string name="icon_email_text">Your email (ex: account@example.com)</string>
     <string name="icon_password">Your password here ...</string>
     <string name="forgot_pw">Forgot password?</string>
+    
     <string name="login_havent_account">
         I don\'t have an account
         <font color="#FF3700B3">
             <b>Register</b>
         </font>
     </string>
+    
+    <string name="register_title">Create an account</string>
+
+    <string name="register_subtitle">
+        <font color="#5915F3"><b>Hi mate!</b></font>
+         Let\'s get started with the app.
+    </string>
+
+    <string name="text_title_fullName">Fullname or username</string>
+    <string name="text_fullName">Input your full name here.</string>
+
+    <string name="text_title_email">Email</string>
+    <string name="text_email">Input your email here.</string>
+
+    <string name="text_title_password">Password</string>
+    <string name="text_password">Input your Password here.</string>
+
+    <string name="text_title_address">Address</string>
+    <string name="text_address">Input your address here.</string>
+
+
+
+    <string name="register_has_account">
+        Already have an account?
+        <font color="#FF3700B3">
+            <b>Login</b>
+        </font>
+    </string>
+
 </resources>
