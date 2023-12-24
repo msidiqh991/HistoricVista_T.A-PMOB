@@ -29,16 +29,26 @@
         app:layout_constraintTop_toBottomOf="@id/tv_login_title"
         />
 
+    <ImageView
+        android:id="@+id/login_img_illustration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/login_illustration_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_subtitle" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/icon_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         style="@style/TextInputLayout"
         android:hint="@string/icon_email_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_login_subtitle"
+        app:layout_constraintTop_toBottomOf="@id/login_img_illustration"
         app:startIconDrawable="@drawable/ic_circle_account"
         >
 
