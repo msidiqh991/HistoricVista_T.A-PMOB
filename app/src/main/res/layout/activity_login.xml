@@ -102,11 +102,11 @@
         android:layout_marginBottom="15dp"
         style="@style/ButtonBlue"
         android:text="@string/btn_login"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/tv_havent_account"
         tools:layout_editor_absoluteX="20dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_havent_account"
         style="@style/loginSubtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
