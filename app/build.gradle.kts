@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -10,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.example.ta_pmob"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -39,24 +40,14 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.firebase:firebase-database:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // Material design - for UI design
-    implementation("com.google.android.material:material:1.1.0")
-
-    // Picasso - for Image loading
-    implementation("com.squareup.picasso:picasso:2.71828")
-
-    // Ken Burns View - for Ken Burns effect
-    implementation("com.flaviofaria:kenburnsview:1.0.7")
-
-    // Smooth bottom bar - for animated bottom navigation
-    implementation("com.github.ibrahimsn98:SmoothBottomBar:1.7.3")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }

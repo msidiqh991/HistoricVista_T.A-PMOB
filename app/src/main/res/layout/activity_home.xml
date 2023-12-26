@@ -26,7 +26,16 @@
         android:text="@string/HomeSubtitle_text"
         />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_carouselView"
+        android:layout_width="match_parent"
+        tools:listitem="@layout/carousel_item"
+        android:background="@color/primary_color"
+        android:layout_marginTop="20dp"
+        android:layout_height="200dp"
+        app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
 
+        />
 
 
 
