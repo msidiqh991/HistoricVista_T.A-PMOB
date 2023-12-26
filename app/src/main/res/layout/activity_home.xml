@@ -26,16 +26,33 @@
         android:text="@string/HomeSubtitle_text"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_carouselView"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager2"
         android:layout_width="match_parent"
-        tools:listitem="@layout/carousel_item"
-        android:background="@color/primary_color"
+        android:layout_height="240dp"
+        android:background="@color/primary_color_variant"
         android:layout_marginTop="20dp"
-        android:layout_height="200dp"
-        app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
-
+        android:layout_centerInParent="true"
         />
+
+    <LinearLayout
+        android:id="@+id/slideDotLL"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/viewpager2"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nearby your location"
+        style="@style/HomeTitle"
+        android:layout_marginTop="15dp"
+        />
+
 
 
 
