@@ -48,15 +48,4 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // Material design - for UI design
-    implementation("com.google.android.material:material:1.1.0")
-
-    // Picasso - for Image loading
-    implementation("com.squareup.picasso:picasso:2.71828")
-
-    // Ken Burns View - for Ken Burns effect
-    implementation("com.flaviofaria:kenburnsview:1.0.7")
-
-    // Smooth bottom bar - for animated bottom navigation
-    implementation("com.github.ibrahimsn98:SmoothBottomBar:1.7.3")
 }

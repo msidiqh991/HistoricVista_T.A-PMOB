@@ -76,11 +76,10 @@
                 <View
                     android:id="@+id/view4"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:background="#70000000"
+                    android:layout_height="76dp"
+                    android:background="@color/grey_light"
                     app:layout_constraintBottom_toTopOf="@+id/imageView3"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

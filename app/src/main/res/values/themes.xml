@@ -65,5 +65,9 @@
         <item name="fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="roundedImageView">
+
+    </style>
+
     <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" />
 </resources>
