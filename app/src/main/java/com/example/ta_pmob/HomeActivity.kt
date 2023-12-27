@@ -1,12 +1,12 @@
 package com.example.ta_pmob
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.ta_pmob.databinding.ActivityHomeBinding
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.ta_pmob.adapters.ImageAdapter
+import com.example.ta_pmob.databinding.ActivityHomeBinding
 import com.example.ta_pmob.models.ImageItem
 import java.util.UUID
 
@@ -26,6 +26,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
 
@@ -55,25 +57,6 @@ class HomeActivity : AppCompatActivity() {
                 "https://fastly.picsum.photos/id/778/500/500.jpg?hmac=jZLZ6WV_OGRxAIIYPk7vGRabcAGAILzxVxhqSH9uLas"
             )
         )
-
-//        val imageList = arrayListOf(
-//            ImageItem(
-//                UUID.randomUUID().toString(),
-//                "android.source://" + packageName + "/" + R.drawable.tugu
-//            ),
-//            ImageItem(
-//                UUID.randomUUID().toString(),
-//                "android.source://" + packageName + "/" + R.drawable.malioboro
-//            ),
-//            ImageItem(
-//                UUID.randomUUID().toString(),
-//                "android.source://" + packageName + "/" + R.drawable.borobudur
-//            ),
-//            ImageItem(
-//                UUID.randomUUID().toString(),
-//                "android.source://" + packageName + "/" + R.drawable.heha
-//            )
-//        )
 
         val imageAdapter = ImageAdapter()
         viewPager2.adapter = imageAdapter
@@ -107,6 +90,7 @@ class HomeActivity : AppCompatActivity() {
                 super.onPageSelected(position)
             }
         }
+
         viewPager2.registerOnPageChangeCallback(pageChangeListener)
     }
 
@@ -114,4 +98,5 @@ class HomeActivity : AppCompatActivity() {
         super.onDestroy()
         viewPager2.unregisterOnPageChangeCallback(pageChangeListener)
     }
+
 }

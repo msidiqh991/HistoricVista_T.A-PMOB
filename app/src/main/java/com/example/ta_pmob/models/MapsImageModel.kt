@@ -1,8 +1,7 @@
-package com.example.ta_pmob
+package com.example.ta_pmob.models
 
 data class MapsImageModel(
-    val photoUrl: String? = null,
     val namaWisata: String? = null,
     val namaKota: String? = null,
-    val jarakTempuh: String? = null,
+    val photoUrl: String? = null,
 )

@@ -1,9 +1,11 @@
-package com.example.ta_pmob
+package com.example.ta_pmob.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ta_pmob.databinding.ActivityHomeBinding
+import com.example.ta_pmob.models.MapsImageModel
 
 class AdapterMaps(private val data: List<MapsImageModel>) :
     RecyclerView.Adapter<AdapterMaps.MapsViewHolder>() {
@@ -11,11 +13,14 @@ class AdapterMaps(private val data: List<MapsImageModel>) :
     class MapsViewHolder(private val binding: ActivityHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(content: MapsImageModel) {
-//            binding.tvNama.text = content.nama
-//            binding.tvShift.text = content.shift
-//            binding.tvDurasi.text = content.durasi
+            binding.tvNamaWisata.text = content.namaWisata
+            binding.tvNamaKota.text = content.namaKota
+            Glide.with(binding.root.context)
+                .load(content.photoUrl)
+                .centerCrop()
+                .into(binding.ivPhotos)
+            }
         }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MapsViewHolder {
         val binding = ActivityHomeBinding.inflate(
@@ -26,11 +31,10 @@ class AdapterMaps(private val data: List<MapsImageModel>) :
         return MapsViewHolder(binding)
     }
 
+    override fun getItemCount(): Int = data.size
+
     override fun onBindViewHolder(holder: MapsViewHolder, position: Int) {
         val data = data[position]
         holder.bind(data)
-
     }
-
-    override fun getItemCount(): Int = data.size
 }
