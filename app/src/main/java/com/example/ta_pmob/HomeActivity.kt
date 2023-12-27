@@ -1,9 +1,11 @@
 package com.example.ta_pmob
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -38,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
         // CardView Maps Nearby location section
         binding.rvLocationList.layoutManager = LinearLayoutManager(this)
         binding.rvLocationList.setHasFixedSize(true)
-
+        showDataMaps()
 
         // Carousel Slider Section
         viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
@@ -119,6 +121,16 @@ class HomeActivity : AppCompatActivity() {
                 val locationList = mutableListOf<MapsImageModel>()
                 val adapter = AdapterMaps(locationList)
 
+                // Redirect to ActivityHomeDetail by Maps Location
+                adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        val selectedLocation = locationList[position]
+                        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
+                        intent.putExtra("locationData", selectedLocation)
+                        startActivity(intent)
+                    }
+                })
+
                 for(dataSnapshot in snapshot.children) {
                     val locationKey = dataSnapshot.getValue(MapsImageModel::class.java)
                     locationKey?.let {
@@ -128,16 +140,18 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 if(locationList.isNotEmpty()) {
-                    binding.
+                    binding.rvLocationList.adapter = adapter
+                } else {
+                    Toast.makeText(this@HomeActivity, "Data tidak tersedia", Toast.LENGTH_LONG).show()
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
+
+// TODO HERE : ADD DATA?
 
 }

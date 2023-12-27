@@ -7,16 +7,18 @@ import com.bumptech.glide.Glide
 import com.example.ta_pmob.databinding.ItemLocationBinding
 import com.example.ta_pmob.models.MapsImageModel
 
-class AdapterMaps(private val data: List<MapsImageModel>) :
+class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
     RecyclerView.Adapter<AdapterMaps.MapsViewHolder>() {
+
+    private var listener: OnItemClickListener? = null
 
     class MapsViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(content: MapsImageModel) {
-            binding.tvNamaWisata.text = content.namaWisata
-            binding.tvNamaKota.text = content.namaKota
+        fun bind(mapsModel: MapsImageModel) {
+            binding.tvNamaWisata.text = mapsModel.namaWisata
+            binding.tvNamaKota.text = mapsModel.namaKota
             Glide.with(binding.root.context)
-                .load(content.photoUrl)
+                .load(mapsModel.photoUrl)
                 .centerCrop()
                 .into(binding.ivPhotos)
             }
@@ -31,10 +33,19 @@ class AdapterMaps(private val data: List<MapsImageModel>) :
         return MapsViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = mapsImageList.size
 
     override fun onBindViewHolder(holder: MapsViewHolder, position: Int) {
-        val data = data[position]
+        val data = mapsImageList[position]
         holder.bind(data)
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
 }
