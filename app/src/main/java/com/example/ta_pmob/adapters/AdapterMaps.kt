@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.ta_pmob.databinding.ActivityHomeBinding
+import com.example.ta_pmob.databinding.ItemLocationBinding
 import com.example.ta_pmob.models.MapsImageModel
 
 class AdapterMaps(private val data: List<MapsImageModel>) :
     RecyclerView.Adapter<AdapterMaps.MapsViewHolder>() {
 
-    class MapsViewHolder(private val binding: ActivityHomeBinding) :
+    class MapsViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(content: MapsImageModel) {
             binding.tvNamaWisata.text = content.namaWisata
@@ -23,7 +23,7 @@ class AdapterMaps(private val data: List<MapsImageModel>) :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MapsViewHolder {
-        val binding = ActivityHomeBinding.inflate(
+        val binding = ItemLocationBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

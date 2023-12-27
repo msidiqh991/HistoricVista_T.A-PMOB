@@ -1,13 +1,21 @@
 package com.example.ta_pmob
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.example.ta_pmob.adapters.AdapterMaps
 import com.example.ta_pmob.adapters.ImageAdapter
 import com.example.ta_pmob.databinding.ActivityHomeBinding
 import com.example.ta_pmob.models.ImageItem
+import com.example.ta_pmob.models.MapsImageModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.UUID
 
 class HomeActivity : AppCompatActivity() {
@@ -27,8 +35,12 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // CardView Maps Nearby location section
+        binding.rvLocationList.layoutManager = LinearLayoutManager(this)
+        binding.rvLocationList.setHasFixedSize(true)
 
 
+        // Carousel Slider Section
         viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
 
         val imageList = arrayListOf(
@@ -97,6 +109,35 @@ class HomeActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         viewPager2.unregisterOnPageChangeCallback(pageChangeListener)
+    }
+
+    private fun showDataMaps() {
+        val dataRef =  FirebaseDatabase.getInstance("LinkFirebase")
+            .getReference("DataLocation")
+        dataRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val locationList = mutableListOf<MapsImageModel>()
+                val adapter = AdapterMaps(locationList)
+
+                for(dataSnapshot in snapshot.children) {
+                    val locationKey = dataSnapshot.getValue(MapsImageModel::class.java)
+                    locationKey?.let {
+                        locationList.add(it)
+                        Log.d("Cek Data Firebase", it.toString())
+                    }
+                }
+
+                if(locationList.isNotEmpty()) {
+                    binding.
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 }
