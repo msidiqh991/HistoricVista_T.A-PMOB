@@ -68,6 +68,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>
 
-    <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" />
+    <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" >
+        <item name="android:windowBackground">@color/white</item>
+    </style>
 
 </resources>
