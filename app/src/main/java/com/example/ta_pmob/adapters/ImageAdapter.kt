@@ -1,8 +1,5 @@
 package com.example.ta_pmob.adapters
 
-import com.example.ta_pmob.R
-import com.example.ta_pmob.models.ImageItem
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.ta_pmob.R
+import com.example.ta_pmob.models.ImageItem
 
-class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback()){
+class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback()) {
+
+    private var onImageItemClickListener: ((ImageItem) -> Unit)? = null
 
     class DiffCallback : DiffUtil.ItemCallback<ImageItem>(){
         override fun areItemsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
@@ -24,8 +25,17 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
         }
 
     }
-    class ViewHolder(iteView: View): RecyclerView.ViewHolder(iteView){
+    inner class ViewHolder(iteView: View): RecyclerView.ViewHolder(iteView){
         private val imageView = iteView.findViewById<ImageView>(R.id.imageView)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onImageItemClickListener?.invoke(getItem(position))
+                }
+            }
+        }
 
         fun bindData(item: ImageItem){
             Glide.with(itemView)
@@ -46,4 +56,11 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
         val imageItem = getItem(position)
         holder.bindData(imageItem)
     }
+
+    fun setOnImageItemClickListener(listener: (ImageItem) -> Unit) {
+        onImageItemClickListener = listener
+    }
+
+
+
 }

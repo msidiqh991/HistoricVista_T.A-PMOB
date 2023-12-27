@@ -41,71 +41,7 @@ class HomeActivity : AppCompatActivity() {
         binding.rvLocationList.layoutManager = LinearLayoutManager(this)
         binding.rvLocationList.setHasFixedSize(true)
         showDataMaps()
-
-        // Carousel Slider Section
-        viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
-
-        val imageList = arrayListOf(
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/866/500/500.jpg?hmac=FOptChXpmOmfR5SpiL2pp74Yadf1T_bRhBF1wJZa9hg"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/270/500/500.jpg?hmac=MK7XNrBrZ73QsthvGaAkiNoTl65ZDlUhEO-6fnd-ZnY"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/320/500/500.jpg?hmac=2iE7TIF9kIqQOHrIUPOJx2wP1CJewQIZBeMLIRrm74s"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/798/500/500.jpg?hmac=Bmzk6g3m8sUiEVHfJWBscr2DUg8Vd2QhN7igHBXLLfo"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/95/500/500.jpg?hmac=0aldBQ7cQN5D_qyamlSP5j51o-Og4gRxSq4AYvnKk2U"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/778/500/500.jpg?hmac=jZLZ6WV_OGRxAIIYPk7vGRabcAGAILzxVxhqSH9uLas"
-            )
-        )
-
-        val imageAdapter = ImageAdapter()
-        viewPager2.adapter = imageAdapter
-        imageAdapter.submitList(imageList)
-
-        val slideDotLL = findViewById<LinearLayout>(R.id.slideDotLL)
-        val dotsImage = Array(imageList.size) { ImageView(this)}
-
-        dotsImage.forEach {
-            it.setImageResource(
-                R.drawable.non_active_dot
-            )
-            slideDotLL.addView(it,params)
-        }
-
-        // default first dot selected
-        dotsImage[0].setImageResource(R.drawable.active_dot)
-
-        pageChangeListener = object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                dotsImage.mapIndexed { index, imageView ->
-                    if (position == index){
-                        imageView.setImageResource(
-                            R.drawable.active_dot
-                        )
-                    } else{
-                        imageView.setImageResource(R.drawable.non_active_dot)
-                    }
-
-                }
-                super.onPageSelected(position)
-            }
-        }
-
-        viewPager2.registerOnPageChangeCallback(pageChangeListener)
+        showImageSlider()
     }
 
     override fun onDestroy() {
@@ -114,8 +50,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showDataMaps() {
-        val dataRef =  FirebaseDatabase.getInstance("LinkFirebase")
-            .getReference("DataLocation")
+        val dataRef =  FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("Bioskop")
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val locationList = mutableListOf<MapsImageModel>()
@@ -152,6 +88,75 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-// TODO HERE : ADD DATA FOR CRUD?
+    private fun showImageSlider() {
+        viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
+
+        val imageList = arrayListOf(
+            ImageItem(
+                UUID.randomUUID().toString(),
+                "https://fastly.picsum.photos/id/866/500/500.jpg?hmac=FOptChXpmOmfR5SpiL2pp74Yadf1T_bRhBF1wJZa9hg"
+            ),
+            ImageItem(
+                UUID.randomUUID().toString(),
+                "https://fastly.picsum.photos/id/270/500/500.jpg?hmac=MK7XNrBrZ73QsthvGaAkiNoTl65ZDlUhEO-6fnd-ZnY"
+            ),
+            ImageItem(
+                UUID.randomUUID().toString(),
+                "https://fastly.picsum.photos/id/320/500/500.jpg?hmac=2iE7TIF9kIqQOHrIUPOJx2wP1CJewQIZBeMLIRrm74s"
+            ),
+            ImageItem(
+                UUID.randomUUID().toString(),
+                "https://fastly.picsum.photos/id/798/500/500.jpg?hmac=Bmzk6g3m8sUiEVHfJWBscr2DUg8Vd2QhN7igHBXLLfo"
+            ),
+            ImageItem(
+                UUID.randomUUID().toString(),
+                "https://fastly.picsum.photos/id/95/500/500.jpg?hmac=0aldBQ7cQN5D_qyamlSP5j51o-Og4gRxSq4AYvnKk2U"
+            ),
+            ImageItem(
+                UUID.randomUUID().toString(),
+                "https://fastly.picsum.photos/id/778/500/500.jpg?hmac=jZLZ6WV_OGRxAIIYPk7vGRabcAGAILzxVxhqSH9uLas"
+            )
+        )
+
+        val imageAdapter = ImageAdapter()
+        viewPager2.adapter = imageAdapter
+        imageAdapter.submitList(imageList)
+
+        imageAdapter.setOnImageItemClickListener { imageItem ->
+            // Redirect ke HomeDetailActivity dengan membawa data dari item yang diklik
+            val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
+            intent.putExtra("imageData", imageItem)
+            startActivity(intent)
+        }
+
+        val slideDotLL = findViewById<LinearLayout>(R.id.slideDotLL)
+        val dotsImage = Array(imageList.size) { ImageView(this) }
+
+        dotsImage.forEach {
+            it.setImageResource(
+                R.drawable.non_active_dot
+            )
+            slideDotLL.addView(it,params)
+        }
+
+        dotsImage[0].setImageResource(R.drawable.active_dot)
+
+        pageChangeListener = object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                dotsImage.mapIndexed { index, imageView ->
+                    if (position == index){
+                        imageView.setImageResource(
+                            R.drawable.active_dot
+                        )
+                    } else{
+                        imageView.setImageResource(R.drawable.non_active_dot)
+                    }
+
+                }
+                super.onPageSelected(position)
+            }
+        }
+        viewPager2.registerOnPageChangeCallback(pageChangeListener)
+    }
 
 }
