@@ -1,0 +1,75 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TA_PMOB" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color_variant</item>
+        <item name="colorSecondary">@color/teal</item>
+        <item name="colorSecondaryVariant">@color/dark_teal</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+    </style>
+
+    <style name="ButtonWhite">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ButtonBlue">
+        <item name="android:background">@color/primary_color</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="loginTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="loginSubtitle">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="startIconTint">@color/primary_color</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="TextInputEditText" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:background">@drawable/bg_text_field</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="HomeTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="HomeSubtitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
+
+    <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" >
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+</resources>

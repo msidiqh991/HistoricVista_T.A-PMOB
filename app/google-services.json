@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "563765064849",
+    "firebase_url": "https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "pmob-pert9",
+    "storage_bucket": "pmob-pert9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563765064849:android:1e11a95ce6f3e5857b7b30",
+        "android_client_info": {
+          "package_name": "com.example.ta_pmob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563765064849-0d3rlv0ddmehrtg5ujoppogbj9obcdgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABQNidv_XnchcFQTnkakMQaO4D6XOxhsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563765064849-0d3rlv0ddmehrtg5ujoppogbj9obcdgk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
