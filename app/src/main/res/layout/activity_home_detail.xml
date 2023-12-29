@@ -234,18 +234,19 @@
                 android:textSize="16sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button"
+                android:id="@+id/fabGoToMaps"
                 style="@android:style/Widget.Button"
                 android:layout_margin="32dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:background="@color/material_dynamic_primary40"
+                android:background="@color/primary_color2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Maps" />
+                android:text="Go to Maps" />
 
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

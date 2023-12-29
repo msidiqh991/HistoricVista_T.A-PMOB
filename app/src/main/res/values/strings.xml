@@ -48,6 +48,6 @@
 
     <string name="HomeTitle_text">Explore an destination</string>
     <string name="HomeSubtitle_text">Recommendations</string>
-
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

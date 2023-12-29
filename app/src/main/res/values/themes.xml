@@ -45,7 +45,8 @@
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
-    
+
+
     <style name="TextInputEditText" parent="Widget.Material3.TextInputLayout.FilledBox">
         <item name="android:background">@drawable/bg_text_field</item>
         <item name="android:fontFamily">@font/montserrat</item>
@@ -71,5 +72,5 @@
     <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" >
         <item name="android:windowBackground">@color/white</item>
     </style>
-
+    
 </resources>

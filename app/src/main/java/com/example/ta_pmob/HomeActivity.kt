@@ -118,14 +118,23 @@ class HomeActivity : AppCompatActivity() {
             )
         )
 
+        val imageMap = mutableMapOf<String, ImageItem>()
+
+        imageList.forEach { imageItem ->
+            imageMap[imageItem.id] = imageItem
+        }
+
         val imageAdapter = ImageAdapter()
         viewPager2.adapter = imageAdapter
         imageAdapter.submitList(imageList)
 
         imageAdapter.setOnImageItemClickListener { imageItem ->
             // Redirect ke HomeDetailActivity dengan membawa data dari item yang diklik
+
+            val clickedImageItem = imageMap[imageItem.id]
+
             val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
-            intent.putExtra("imageData", imageItem)
+            intent.putExtra("imageData", clickedImageItem)
             startActivity(intent)
         }
 

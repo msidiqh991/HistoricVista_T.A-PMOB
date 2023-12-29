@@ -1,11 +1,27 @@
 package com.example.ta_pmob
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.ta_pmob.databinding.ActivityHomeDetailBinding
 
 class HomeDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_detail)
+        binding = ActivityHomeDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val imageId = intent.getStringExtra("IMAGE_ID")
+
+        val locationIdToShow = imageId
+
+        binding.fabGoToMaps.setOnClickListener {
+            // Mengambil ID atau indeks lokasi yang ingin ditampilkan (misalnya, indeks ke-2)
+            val intent = Intent(this, MapsActivity::class.java)
+            intent.putExtra("LOCATION_ID", locationIdToShow)
+            startActivity(intent)
+        }
     }
 }

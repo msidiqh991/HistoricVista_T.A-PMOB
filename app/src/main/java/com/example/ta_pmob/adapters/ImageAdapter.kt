@@ -25,6 +25,7 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
         }
 
     }
+
     inner class ViewHolder(iteView: View): RecyclerView.ViewHolder(iteView){
         private val imageView = iteView.findViewById<ImageView>(R.id.imageView)
 
@@ -60,7 +61,4 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
     fun setOnImageItemClickListener(listener: (ImageItem) -> Unit) {
         onImageItemClickListener = listener
     }
-
-
-
 }
