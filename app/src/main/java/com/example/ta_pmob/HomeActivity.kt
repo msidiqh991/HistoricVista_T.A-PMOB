@@ -32,6 +32,7 @@ class HomeActivity : AppCompatActivity() {
     ).apply {
         setMargins(8,0,8,0)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -51,21 +52,21 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showDataMaps() {
         val dataRef =  FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
-            .getReference("Bioskop")
+            .getReference("DataLocation")
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val locationList = mutableListOf<MapsImageModel>()
                 val adapter = AdapterMaps(locationList)
 
                 // Redirect to ActivityHomeDetail by Maps Location
-                adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        val selectedLocation = locationList[position]
-                        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
-                        intent.putExtra("locationData", selectedLocation)
-                        startActivity(intent)
-                    }
-                })
+//                adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
+//                    override fun onItemClick(position: Int) {
+//                        val selectedLocation = locationList[position]
+//                        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
+//                        intent.putExtra("locationData", selectedLocation)
+//                        startActivity(intent)
+//                    }
+//                })
 
                 for(dataSnapshot in snapshot.children) {
                     val locationKey = dataSnapshot.getValue(MapsImageModel::class.java)
@@ -121,7 +122,7 @@ class HomeActivity : AppCompatActivity() {
         val imageMap = mutableMapOf<String, ImageItem>()
 
         imageList.forEach { imageItem ->
-            imageMap[imageItem.id] = imageItem
+            imageMap[imageItem.imageId] = imageItem
         }
 
         val imageAdapter = ImageAdapter()
@@ -130,8 +131,7 @@ class HomeActivity : AppCompatActivity() {
 
         imageAdapter.setOnImageItemClickListener { imageItem ->
             // Redirect ke HomeDetailActivity dengan membawa data dari item yang diklik
-
-            val clickedImageItem = imageMap[imageItem.id]
+            val clickedImageItem = imageMap[imageItem.imageId]
 
             val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
             intent.putExtra("imageData", clickedImageItem)

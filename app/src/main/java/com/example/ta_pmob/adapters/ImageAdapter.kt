@@ -17,7 +17,7 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
 
     class DiffCallback : DiffUtil.ItemCallback<ImageItem>(){
         override fun areItemsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.imageId == newItem.imageId
         }
 
         override fun areContentsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {

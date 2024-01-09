@@ -20,7 +20,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private var locationIdToShow: Int = -1
 
-    // Contoh daftar koordinat www
+    // Contoh daftar koordinat
     private val listOfCoordinates = mutableListOf<LatLng>()
 
     // Indeks saat ini yang menunjukkan koordinat mana yang akan ditampilkan

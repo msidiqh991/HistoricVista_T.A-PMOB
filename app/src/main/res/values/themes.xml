@@ -66,7 +66,8 @@
         <item name="fontFamily">@font/montserrat</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="RoundedImage">
+        <item name="cornerRadius">20dp</item>
     </style>
 
     <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" >

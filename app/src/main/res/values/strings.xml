@@ -16,8 +16,8 @@
         are you ready to take a trip?
     </string>
 
-    <string name="icon_email_text">Your email (ex: account@example.com)</string>
-    <string name="icon_password">Your password here ...</string>
+    <string name="icon_email_text">Your email</string>
+    <string name="icon_password">Your password</string>
     <string name="forgot_pw">Forgot password?</string>
 
     <string name="login_havent_account">
