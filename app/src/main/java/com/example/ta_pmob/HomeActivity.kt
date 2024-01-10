@@ -26,6 +26,9 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewPager2 : ViewPager2
     private lateinit var pageChangeListener: ViewPager2.OnPageChangeCallback
 
+    val dataRef = FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        .getReference("DataLocation")
+
     private val params = LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -38,9 +41,10 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // CardView Maps Nearby location section
+        // RecyclerView Maps Nearby location section
         binding.rvLocationList.layoutManager = LinearLayoutManager(this)
         binding.rvLocationList.setHasFixedSize(true)
+
         showDataMaps()
         showImageSlider()
     }
@@ -51,22 +55,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showDataMaps() {
-        val dataRef =  FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
-            .getReference("DataLocation")
+//        val dataRef =  FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+//            .getReference("DataLocation")
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val locationList = mutableListOf<MapsImageModel>()
                 val adapter = AdapterMaps(locationList)
-
-                // Redirect to ActivityHomeDetail by Maps Location
-//                adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
-//                    override fun onItemClick(position: Int) {
-//                        val selectedLocation = locationList[position]
-//                        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
-//                        intent.putExtra("locationData", selectedLocation)
-//                        startActivity(intent)
-//                    }
-//                })
 
                 for(dataSnapshot in snapshot.children) {
                     val locationKey = dataSnapshot.getValue(MapsImageModel::class.java)
@@ -78,6 +72,15 @@ class HomeActivity : AppCompatActivity() {
 
                 if(locationList.isNotEmpty()) {
                     binding.rvLocationList.adapter = adapter
+
+                    adapter.setOnImageIdClickListener(object : AdapterMaps.OnImageIdClickListener {
+                        override fun onImageIdClick(MapsModelImage: Int) {
+                            val locationIdToShow = locationList[MapsModelImage].imageId
+                            navigateToHomeDetail(locationIdToShow)
+                        }
+
+                    })
+
                 } else {
                     Toast.makeText(this@HomeActivity, "Data tidak tersedia", Toast.LENGTH_LONG).show()
                 }
@@ -87,6 +90,12 @@ class HomeActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
+    }
+
+    private fun navigateToHomeDetail(locationIdToShow: Int?) {
+        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
+        intent.putExtra(HomeDetailActivity.DATA_ID, locationIdToShow)
+        startActivity(intent)
     }
 
     private fun showImageSlider() {

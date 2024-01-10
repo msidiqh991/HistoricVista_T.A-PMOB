@@ -26,8 +26,8 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
 
     }
 
-    inner class ViewHolder(iteView: View): RecyclerView.ViewHolder(iteView){
-        private val imageView = iteView.findViewById<ImageView>(R.id.imageView)
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        private val imageView = itemView.findViewById<ImageView>(R.id.imageView)
 
         init {
             itemView.setOnClickListener {

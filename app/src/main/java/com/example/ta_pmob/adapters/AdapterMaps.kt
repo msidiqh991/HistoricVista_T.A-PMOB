@@ -59,10 +59,10 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
     override fun onBindViewHolder(holder: MapsViewHolder, position: Int) {
         val data = mapsImageList[position]
         holder.bind(data)
-//
-//        holder.itemView.setOnClickListener {
-//            imageIdListener?.onImageIdClick(data.imageId ?: -1)
-//        }
+
+        holder.itemView.setOnClickListener {
+            imageIdListener?.onImageIdClick(data.imageId ?: -1)
+        }
 
     }
 
