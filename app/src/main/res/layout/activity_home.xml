@@ -22,15 +22,6 @@
             android:layout_gravity="start"
             />
 
-        <ImageView
-            android:id="@+id/left_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="15dp"
-            android:layout_toLeftOf="@id/button_add_new_maps"
-            android:src="@drawable/icon_history" />
-
         <ImageButton
             android:id="@+id/button_add_new_maps"
             android:layout_width="wrap_content"
@@ -63,7 +54,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager2"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
         />
@@ -83,7 +74,7 @@
         android:layout_height="wrap_content"
         android:text="Nearby your location"
         style="@style/HomeSubtitle"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         />
 
     <FrameLayout
@@ -98,5 +89,43 @@
             android:layout_height="match_parent" />
 
     </FrameLayout>
+
+    <!--    TODO : FRAGMENT NAVBAR BOTTOM-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <FrameLayout
+            android:id="@+id/frame_layout_navbarBottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/navbar_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navbar_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_nav_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/navbar_bottom"
+            app:itemIconTint="@color/navbar_item_selector"
+            app:itemTextColor="@color/navbar_item_selector"
+            app:itemPaddingTop="15dp"
+            app:itemIconSize="30sp"
+            app:itemPaddingBottom="20dp"
+            >
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
