@@ -53,7 +53,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         if (locationIdToShow != -1) {
-            // Jika ID lokasi diterima, cari indeks koordinat yang sesuai
             val foundIndex = locationIdToShow - 1  // Adjust to 0-based index
             if (foundIndex in 0 until listOfCoordinates.size) {
                 currentIndex = foundIndex
@@ -76,14 +75,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val currentCoordinate = listOfCoordinates[currentIndex]
             val currentLocationName = getLocationNameByIndex(currentIndex)
 
-            mMap.clear() // Hapus marker sebelum menambah yang baru
-            mMap.addMarker(MarkerOptions().position(currentCoordinate).title(currentLocationName))
+            mMap.clear()
+
+            val markerOptions = MarkerOptions()
+                .position(currentCoordinate)
+                .title(currentLocationName)
+
+            markerOptions.snippet("Deskripsi Lokasi Contoh")
+            mMap.addMarker(markerOptions)
+
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 12f))
         }
     }
 
     private fun getLocationNameByIndex(index: Int): String {
-        // Mengembalikan nama lokasi berdasarkan indeks
         return when (index) {
             0 -> "Candi Prambanan"
             1 -> "Candi Miri"
@@ -96,7 +101,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    // Methode ini dipanggil saat tombol "Next Location" diklik
     fun showNextLocation(view: View) {
         currentIndex = (currentIndex + 1) % listOfCoordinates.size
         showMarkerForCurrentIndex()

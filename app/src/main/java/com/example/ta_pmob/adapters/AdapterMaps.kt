@@ -33,6 +33,7 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
                 detailMapsIntent.putExtra(DATA_WISATA, mapsModel.namaWisata)
                 detailMapsIntent.putExtra(DATA_KOTA, mapsModel.namaKota)
                 it.context.startActivity(detailMapsIntent)
+
                 }
             }
         }
@@ -62,8 +63,8 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
 
         holder.itemView.setOnClickListener {
             imageIdListener?.onImageIdClick(data.imageId ?: -1)
+            listener?.onItemClick(holder.adapterPosition)
         }
-
     }
 
     interface OnItemClickListener {

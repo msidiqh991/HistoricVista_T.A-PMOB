@@ -13,29 +13,28 @@ import com.google.firebase.database.ValueEventListener
 class HomeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeDetailBinding
-    private val dataRef = FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("DataLocation")
+    private val dataRef = FirebaseDatabase
+        .getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        .getReference("DataLocation")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val namaWisata = intent.getStringExtra(DATA_WISATA)
-//        val namaKota = intent.getStringExtra(DATA_KOTA)
-//
-//        binding.apply {
-//            tvDetailNamaWisata.text = namaWisata
-//            tvDetailNamaKota.text = namaKota
-//        }
-
         val locationIdToShow = intent.getIntExtra(DATA_ID, -1)
 
         getDatafromDatabase(locationIdToShow)
 
         binding.fabGoToMaps.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("LOCATION_ID", locationIdToShow)
-            startActivity(intent)
+            val dataWisata = binding.tvDetailNamaWisata.text.toString()
+            val dataKota = binding.tvDetailNamaKota.text.toString()
+
+            if (locationIdToShow != null && dataWisata.isNotEmpty() && dataKota.isNotEmpty()) {
+                launchMapsActivity(locationIdToShow, dataWisata, dataKota)
+            } else {
+                Log.e("HomeDetailActivity", "Data is missing")
+            }
         }
     }
 
@@ -56,14 +55,12 @@ class HomeDetailActivity : AppCompatActivity() {
                             tvDetailNamaKota.text = dataKota
                         }
 
-//                        val latitude = locationSnapshot.child("latitude").getValue(Double::class.java)
-//                        val longitude = locationSnapshot.child("longitude").getValue(Double::class.java)
-
-                            launchMapsActivity(
-                                imageId,
-                                dataWisata.toString(),
-                                dataKota.toString(),
-                            )
+                        launchMapsActivity(
+                            imageId,
+                            dataWisata.toString(),
+                            dataKota.toString(),
+                        )
+                        break
                     }
                 }
             }
@@ -74,15 +71,14 @@ class HomeDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun launchMapsActivity(imageId: Int?, dataWisata: String, dataKota: String) {
+    private fun launchMapsActivity(locationIdToShow: Int?, dataWisata: String, dataKota: String) {
         val intent = Intent(this, MapsActivity::class.java)
-        intent.putExtra("LOCATION_ID", imageId)
+        intent.putExtra("LOCATION_ID", locationIdToShow)
         intent.putExtra("DATA_WISATA", dataWisata)
         intent.putExtra("DATA_KOTA", dataKota)
         startActivity(intent)
     }
-
-
+    
     companion object {
         const val DATA_ID = "data_id"
         const val DATA_WISATA = "data_wisata"

@@ -26,7 +26,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewPager2 : ViewPager2
     private lateinit var pageChangeListener: ViewPager2.OnPageChangeCallback
 
-    val dataRef = FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    val dataRef = FirebaseDatabase
+        .getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
         .getReference("DataLocation")
 
     private val params = LinearLayout.LayoutParams(
@@ -55,8 +56,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showDataMaps() {
-//        val dataRef =  FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
-//            .getReference("DataLocation")
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val locationList = mutableListOf<MapsImageModel>()
@@ -73,27 +72,25 @@ class HomeActivity : AppCompatActivity() {
                 if(locationList.isNotEmpty()) {
                     binding.rvLocationList.adapter = adapter
 
-                    adapter.setOnImageIdClickListener(object : AdapterMaps.OnImageIdClickListener {
-                        override fun onImageIdClick(MapsModelImage: Int) {
-                            val locationIdToShow = locationList[MapsModelImage].imageId
+                    adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            val locationIdToShow = locationList[position].imageId
                             navigateToHomeDetail(locationIdToShow)
                         }
-
                     })
-
                 } else {
                     Toast.makeText(this@HomeActivity, "Data tidak tersedia", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                // Handle onCancelled if needed
             }
         })
     }
 
     private fun navigateToHomeDetail(locationIdToShow: Int?) {
-        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
+        val intent = Intent(this, HomeDetailActivity::class.java)
         intent.putExtra(HomeDetailActivity.DATA_ID, locationIdToShow)
         startActivity(intent)
     }
