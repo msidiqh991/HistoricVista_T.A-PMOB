@@ -70,14 +70,6 @@
         <item name="cornerRadius">20dp</item>
     </style>
 
-    <style name="BottomNavigationView.ActiveText">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="BottomNavigationView.InactiveText">
-        <item name="android:textSize">10sp</item>
-    </style>
-
     <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" >
         <item name="android:windowBackground">@color/white</item>
     </style>

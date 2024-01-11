@@ -60,7 +60,6 @@ class HomeDetailActivity : AppCompatActivity() {
                             dataWisata.toString(),
                             dataKota.toString(),
                         )
-                        break
                     }
                 }
             }
