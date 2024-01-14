@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ta_pmob.HomeDetailActivity
 import com.example.ta_pmob.HomeDetailActivity.Companion.DATA_KOTA
+import com.example.ta_pmob.HomeDetailActivity.Companion.DATA_PHOTOS
 import com.example.ta_pmob.HomeDetailActivity.Companion.DATA_WISATA
 import com.example.ta_pmob.databinding.ItemLocationBinding
 import com.example.ta_pmob.models.MapsImageModel
@@ -31,6 +32,7 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
                 val detailMapsIntent = Intent(it.context, HomeDetailActivity::class.java)
                 detailMapsIntent.putExtra(DATA_WISATA, mapsModel.namaWisata)
                 detailMapsIntent.putExtra(DATA_KOTA, mapsModel.namaKota)
+                detailMapsIntent.putExtra(DATA_PHOTOS, mapsModel.photoUrl)
                 it.context.startActivity(detailMapsIntent)
                 }
             }

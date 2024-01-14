@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.ta_pmob.databinding.ActivityHomeDetailBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,7 +24,7 @@ class HomeDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val locationIdToShow = intent.getIntExtra(DATA_ID, -1)
-
+//        val photoUrl = intent.getStringExtra(DATA_PHOTOS)
         getDatafromDatabase(locationIdToShow)
 
         binding.apply {
@@ -49,27 +50,30 @@ class HomeDetailActivity : AppCompatActivity() {
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (locationSnapshot in snapshot.children) {
-                    val dataId = locationSnapshot.key // Get the unique key (e.g., NlWCJwy_vF7Stk-f4Nl)
+                    val dataId = locationSnapshot.key
                     val imageId = locationSnapshot.child("imageId").getValue(Int::class.java)
                     val dataWisata = locationSnapshot.child("namaWisata").getValue(String::class.java)
                     val dataKota = locationSnapshot.child("namaKota").getValue(String::class.java)
-                    val dataPhotos = locationSnapshot.child("photoUrl").getValue(String::class.java)
+                    val photoUrl = locationSnapshot.child("photoUrl").getValue(String::class.java)
 
                     Log.d("HomeDetailActivity",
                         "dataId: $dataId, " +
                                 "imageId: $imageId, " +
                                 "dataWisata: $dataWisata, " +
                                 "dataKota: $dataKota, " +
-                                "dataPhotos: $dataPhotos, " +
                                 "LocationId: $locationIdToShow")
 
                     if (imageId != null && imageId == locationIdToShow) {
                         binding.apply {
                             tvDetailNamaWisata.text = dataWisata
                             tvDetailNamaKota.text = dataKota
-                            ivMapsPhotos.text = dataPhotos
-
                         }
+
+                        Glide.with(this@HomeDetailActivity)
+                            .load(photoUrl)
+                            .centerCrop()
+                            .fitCenter()
+                            .into(binding.ivMapsPhotos)
 
                         launchMapsActivity(
                             imageId,
@@ -98,6 +102,7 @@ class HomeDetailActivity : AppCompatActivity() {
         const val DATA_ID = "data_id"
         const val DATA_WISATA = "data_wisata"
         const val DATA_KOTA = "data_kota"
+        const val DATA_PHOTOS = "data_photos"
     }
 
 }
