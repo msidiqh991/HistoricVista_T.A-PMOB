@@ -7,8 +7,6 @@
     tools:context=".authentication.LoginActivity"
     android:padding="20dp">
 
-
-
     <TextView
         android:id="@+id/tv_login_title"
         android:layout_width="match_parent"
@@ -52,7 +50,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/icon_email"

@@ -24,16 +24,17 @@ class HomeDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val locationIdToShow = intent.getIntExtra(DATA_ID, -1)
-//        val photoUrl = intent.getStringExtra(DATA_PHOTOS)
+
         getDatafromDatabase(locationIdToShow)
 
         binding.apply {
             fabGoToMaps.setOnClickListener {
                 val dataWisata = binding.tvDetailNamaWisata.text.toString()
                 val dataKota = binding.tvDetailNamaKota.text.toString()
+                val dataDescription = binding.tvDescription.text.toString()
 
-                if (locationIdToShow != null && dataWisata.isNotEmpty() && dataKota.isNotEmpty()) {
-                    launchMapsActivity(locationIdToShow, dataWisata, dataKota)
+                if (locationIdToShow != null) {
+                    launchMapsActivity(locationIdToShow, dataWisata, dataKota, dataDescription, dataRating = 0.0f)
                 } else {
                     Log.e("HomeDetailActivity", "Data is missing")
                 }
@@ -54,6 +55,8 @@ class HomeDetailActivity : AppCompatActivity() {
                     val imageId = locationSnapshot.child("imageId").getValue(Int::class.java)
                     val dataWisata = locationSnapshot.child("namaWisata").getValue(String::class.java)
                     val dataKota = locationSnapshot.child("namaKota").getValue(String::class.java)
+                    val dataDescription = locationSnapshot.child("description").getValue(String::class.java)
+                    val dataRating = locationSnapshot.child("rating").getValue(Float::class.java)
                     val photoUrl = locationSnapshot.child("photoUrl").getValue(String::class.java)
 
                     Log.d("HomeDetailActivity",
@@ -61,12 +64,16 @@ class HomeDetailActivity : AppCompatActivity() {
                                 "imageId: $imageId, " +
                                 "dataWisata: $dataWisata, " +
                                 "dataKota: $dataKota, " +
+                                "dataDescription: $dataDescription, " +
+                                "dataRating: $dataRating, " +
                                 "LocationId: $locationIdToShow")
 
                     if (imageId != null && imageId == locationIdToShow) {
                         binding.apply {
                             tvDetailNamaWisata.text = dataWisata
                             tvDetailNamaKota.text = dataKota
+                            tvDescription.text = dataDescription
+                            ratingTxt.text = dataRating.toString()
                         }
 
                         Glide.with(this@HomeDetailActivity)
@@ -79,6 +86,8 @@ class HomeDetailActivity : AppCompatActivity() {
                             imageId,
                             dataWisata.toString(),
                             dataKota.toString(),
+                            dataDescription.toString(),
+                            dataRating,
                         )
                     }
                 }
@@ -90,11 +99,19 @@ class HomeDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun launchMapsActivity(locationIdToShow: Int?, dataWisata: String, dataKota: String) {
+    private fun launchMapsActivity(
+        locationIdToShow: Int?,
+        dataWisata: String,
+        dataKota: String,
+        dataDescription: String,
+        dataRating: Float?
+    ) {
         val intent = Intent(this, MapsActivity::class.java)
         intent.putExtra("LOCATION_ID", locationIdToShow)
-        intent.putExtra("DATA_WISATA", dataWisata)
-        intent.putExtra("DATA_KOTA", dataKota)
+        intent.putExtra(DATA_WISATA, dataWisata)
+        intent.putExtra(DATA_KOTA, dataKota)
+        intent.putExtra(DATA_DESCRIPTION, dataDescription)
+        intent.putExtra(DATA_RATING, dataRating?: 0.0f)
         startActivity(intent)
     }
     
@@ -102,6 +119,8 @@ class HomeDetailActivity : AppCompatActivity() {
         const val DATA_ID = "data_id"
         const val DATA_WISATA = "data_wisata"
         const val DATA_KOTA = "data_kota"
+        const val DATA_DESCRIPTION = "data_description"
+        const val DATA_RATING = "data_rating"
         const val DATA_PHOTOS = "data_photos"
     }
 

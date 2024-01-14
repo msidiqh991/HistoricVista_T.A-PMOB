@@ -26,8 +26,11 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLoginHome.setOnClickListener {
             showProgressBar()
             val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            hideProgressBar()
+
+            binding.root.postDelayed({
+                startActivity(intent)
+                hideProgressBar()
+            }, 500)
         }
 
         binding.tvHaventAccount.setOnClickListener {

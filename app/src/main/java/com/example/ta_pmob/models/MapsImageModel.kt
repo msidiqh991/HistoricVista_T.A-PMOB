@@ -7,17 +7,16 @@ data class MapsImageModel(
     val namaWisata: String,
     val namaKota: String,
     val photoUrl: String,
-
-//    val description: String? = null,
-//    val country: String? = null,
-//    val rating: Float? = null,
-//    val jarakSatuan: Int? = null
+    val description: String,
+    val rating: Float
 
 ) : Serializable {
     constructor() : this(
         imageId = -1,
         photoUrl = "",
         namaWisata = "",
-        namaKota = ""
+        namaKota = "",
+        description = "",
+        rating = 0.0f
     )
 }

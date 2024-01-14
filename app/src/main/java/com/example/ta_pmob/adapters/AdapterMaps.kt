@@ -18,6 +18,7 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
     private var listener: OnItemClickListener? = null
     private var imageIdListener: OnImageIdClickListener? = null
 
+    // RecyclerView List Item
     class MapsViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(mapsModel: MapsImageModel) {

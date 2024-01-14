@@ -49,9 +49,6 @@ class HomeActivity : AppCompatActivity() {
         recyclerView.layoutManager = manager
         recyclerView.setHasFixedSize(true)
 
-//        binding.rvLocationList.layoutManager = LinearLayoutManager(this)
-//        binding.rvLocationList.setHasFixedSize(true)
-
         NavigationBarBottom()
         showDataMaps()
         showImageSlider()

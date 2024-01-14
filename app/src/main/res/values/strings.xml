@@ -34,10 +34,10 @@
          Let\'s get started with the app.
     </string>
 
-    <string name="text_fullName">Input your full name here.</string>
-    <string name="text_email">Input your email here.</string>
-    <string name="text_password">Input your Password here.</string>
-    <string name="text_address">Re-input your password again.</string>
+    <string name="text_fullName">Fullname</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_address">Re-input password.</string>
 
     <string name="register_has_account">
         Already have an account?
