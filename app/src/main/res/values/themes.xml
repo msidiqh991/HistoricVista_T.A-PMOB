@@ -73,5 +73,4 @@
     <style name="Theme.TA_PMOB" parent="Base.Theme.TA_PMOB" >
         <item name="android:windowBackground">@color/white</item>
     </style>
-    
 </resources>

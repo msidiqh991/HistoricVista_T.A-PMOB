@@ -14,7 +14,7 @@ class HomeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeDetailBinding
     private val dataRef = FirebaseDatabase
-        .getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
         .getReference("DataLocation")
 
     override fun onCreate(savedInstanceState: Bundle?) {

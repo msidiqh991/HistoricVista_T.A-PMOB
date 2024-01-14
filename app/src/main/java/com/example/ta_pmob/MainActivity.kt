@@ -1,5 +1,6 @@
 package com.example.ta_pmob
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -14,10 +15,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-//        val isFirstTime = sharedPreferences.getBoolean("isFirstTime", true)
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+        val isFirstTime = sharedPreferences.getBoolean("isFirstTime", true)
 
-//        if (isFirstTime) {
+        if (isFirstTime) {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
@@ -29,13 +30,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, RegisterActivity::class.java))
             }
 
-//            with(sharedPreferences.edit()) {
-//                putBoolean("isFirstTime", false)
-//                apply()
-//            }
-//        } else {
-//            startActivity(Intent(this, LoginActivity::class.java))
-//            finish()
-//        }
+            with(sharedPreferences.edit()) {
+                putBoolean("isFirstTime", false)
+                apply()
+            }
+        } else {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 }

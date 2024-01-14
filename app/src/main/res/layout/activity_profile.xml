@@ -87,6 +87,7 @@
                         android:textStyle="bold"
                         style="@android:style/Widget.Button"
                         android:textAlignment="viewStart" />
+                    
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button2"
                         android:layout_width="match_parent"
@@ -104,6 +105,7 @@
                         android:paddingStart="20dp"
                         android:text="Account Settings"
                         android:textAlignment="viewStart" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button3"
                         android:layout_width="match_parent"
@@ -121,6 +123,7 @@
                         android:paddingStart="20dp"
                         android:text="Personal Information"
                         android:textAlignment="viewStart" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button4"
                         android:layout_width="match_parent"
@@ -138,14 +141,14 @@
                         android:paddingStart="20dp"
                         android:text="Notification"
                         android:textAlignment="viewStart" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         style="@android:style/Widget.Button"
                         android:background="@drawable/btn_background_2"
                         android:layout_marginEnd="32dp"
                         android:layout_marginStart="32dp"
-                        android:layout_marginTop="16dp"
                         android:text="Back to Main page"
                         android:textColor="#ffffff"
                         android:textStyle="bold"

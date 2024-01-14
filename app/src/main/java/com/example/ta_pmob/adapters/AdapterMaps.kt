@@ -27,13 +27,11 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
                 .centerCrop()
                 .into(binding.ivPhotos)
 
-            // TODO : MAINTENANCE TO ACCESS DETAIL_ACTIVTIY
             binding.root.setOnClickListener {
                 val detailMapsIntent = Intent(it.context, HomeDetailActivity::class.java)
                 detailMapsIntent.putExtra(DATA_WISATA, mapsModel.namaWisata)
                 detailMapsIntent.putExtra(DATA_KOTA, mapsModel.namaKota)
                 it.context.startActivity(detailMapsIntent)
-
                 }
             }
         }
@@ -74,5 +72,4 @@ class AdapterMaps(private val mapsImageList: List<MapsImageModel>) :
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
-
 }

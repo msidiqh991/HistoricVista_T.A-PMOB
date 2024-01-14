@@ -40,7 +40,7 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
 
         fun bindData(item: ImageItem){
             Glide.with(itemView)
-                .load(item.url)
+                .load(item.photoUrl)
                 .into(imageView)
         }
 
