@@ -116,7 +116,7 @@
                     android:layout_weight="0.3333">
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/regionFlag"
                         android:layout_width="29dp"
                         android:layout_height="23dp"
                         android:layout_marginStart="16dp"
@@ -226,17 +226,31 @@
                 android:layout_marginStart="32dp"/>
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Expansive, 9th-century Hindu temple complex featuring structures with stone spires and sculptures.
-
-"
+                android:text="Expansive, 9th-century Hindu temple complex featuring structures with stone spires and sculptures."
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginTop="8dp"
                 android:textColor="#000000"
                 android:textSize="16sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fabGoToHome"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginBottom="-10dp"
+                android:text="Back to Home"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/fabGoToMaps"
@@ -249,6 +263,8 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+
 
         </LinearLayout>
     </ScrollView>

@@ -1,4 +1,4 @@
-package com.example.ta_pmob
+package com.example.ta_pmob.authentication
 
 import android.content.Intent
 import android.os.Bundle

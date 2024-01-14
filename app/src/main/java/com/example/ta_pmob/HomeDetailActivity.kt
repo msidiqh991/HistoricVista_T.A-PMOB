@@ -26,16 +26,23 @@ class HomeDetailActivity : AppCompatActivity() {
 
         getDatafromDatabase(locationIdToShow)
 
-        binding.fabGoToMaps.setOnClickListener {
-            val dataWisata = binding.tvDetailNamaWisata.text.toString()
-            val dataKota = binding.tvDetailNamaKota.text.toString()
+        binding.apply {
+            fabGoToMaps.setOnClickListener {
+                val dataWisata = binding.tvDetailNamaWisata.text.toString()
+                val dataKota = binding.tvDetailNamaKota.text.toString()
 
-            if (locationIdToShow != null && dataWisata.isNotEmpty() && dataKota.isNotEmpty()) {
-                launchMapsActivity(locationIdToShow, dataWisata, dataKota)
-            } else {
-                Log.e("HomeDetailActivity", "Data is missing")
+                if (locationIdToShow != null && dataWisata.isNotEmpty() && dataKota.isNotEmpty()) {
+                    launchMapsActivity(locationIdToShow, dataWisata, dataKota)
+                } else {
+                    Log.e("HomeDetailActivity", "Data is missing")
+                }
+            }
+            fabGoToHome.setOnClickListener {
+                val intent = Intent(this@HomeDetailActivity, HomeActivity::class.java)
+                startActivity(intent)
             }
         }
+
     }
 
     fun getDatafromDatabase(locationIdToShow: Int?) {
@@ -46,13 +53,22 @@ class HomeDetailActivity : AppCompatActivity() {
                     val imageId = locationSnapshot.child("imageId").getValue(Int::class.java)
                     val dataWisata = locationSnapshot.child("namaWisata").getValue(String::class.java)
                     val dataKota = locationSnapshot.child("namaKota").getValue(String::class.java)
+                    val dataPhotos = locationSnapshot.child("photoUrl").getValue(String::class.java)
 
-                    Log.d("HomeDetailActivity", "dataId: $dataId, imageId: $imageId, dataWisata: $dataWisata, dataKota: $dataKota, LocationId: $locationIdToShow")
+                    Log.d("HomeDetailActivity",
+                        "dataId: $dataId, " +
+                                "imageId: $imageId, " +
+                                "dataWisata: $dataWisata, " +
+                                "dataKota: $dataKota, " +
+                                "dataPhotos: $dataPhotos, " +
+                                "LocationId: $locationIdToShow")
 
                     if (imageId != null && imageId == locationIdToShow) {
                         binding.apply {
                             tvDetailNamaWisata.text = dataWisata
                             tvDetailNamaKota.text = dataKota
+                            ivMapsPhotos.text = dataPhotos
+
                         }
 
                         launchMapsActivity(

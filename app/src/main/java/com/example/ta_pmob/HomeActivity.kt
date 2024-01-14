@@ -52,6 +52,12 @@ class HomeActivity : AppCompatActivity() {
 //        binding.rvLocationList.layoutManager = LinearLayoutManager(this)
 //        binding.rvLocationList.setHasFixedSize(true)
 
+        NavigationBarBottom()
+        showDataMaps()
+        showImageSlider()
+    }
+
+    private fun NavigationBarBottom() {
         // Navigate to Another Activity
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navbar_bottom)
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
@@ -72,9 +78,6 @@ class HomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        showDataMaps()
-        showImageSlider()
     }
 
     private fun showDataMaps() {

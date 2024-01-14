@@ -1,31 +1,42 @@
-package com.example.ta_pmob
+package com.example.ta_pmob.authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ta_pmob.HomeActivity
 import com.example.ta_pmob.databinding.ActivityLoginBinding
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize Progress Bar
+        progressBar = binding.progressBar
+
         binding.btnLoginHome.setOnClickListener {
+            showProgressBar()
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
+            hideProgressBar()
         }
 
         binding.tvHaventAccount.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+
+
 
         //        binding.btnLoginHome.setOnClickListener {
 //            val email = binding.etEmail.text.toString()
@@ -51,4 +62,13 @@ class LoginActivity : AppCompatActivity() {
 //        }
 
     }
+
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.INVISIBLE
+    }
+
 }
