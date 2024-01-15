@@ -2,7 +2,10 @@ package com.example.ta_pmob.authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ta_pmob.HomeActivity
@@ -25,12 +28,12 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLoginHome.setOnClickListener {
             showProgressBar()
-            val intent = Intent(this, HomeActivity::class.java)
 
-            binding.root.postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 hideProgressBar()
-            }, 500)
+            }, 2000)
         }
 
         binding.tvHaventAccount.setOnClickListener {
@@ -72,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
+
     }
 
 }
