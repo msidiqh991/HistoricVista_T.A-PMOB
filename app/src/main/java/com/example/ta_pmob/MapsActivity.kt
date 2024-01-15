@@ -1,5 +1,6 @@
 package com.example.ta_pmob
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -47,6 +48,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        RelationToAnotherActivities()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -59,10 +62,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-        // Tampilkan lokasi berdasarkan indeks
         showMarkerForCurrentIndex()
 
-        // Setelah marker diklik, tampilkan pesan toast
         mMap.setOnMarkerClickListener { marker ->
             Toast.makeText(this@MapsActivity, "Clicked on ${marker.title}", Toast.LENGTH_SHORT).show()
             false
@@ -81,7 +82,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .position(currentCoordinate)
                 .title(currentLocationName)
 
-            markerOptions.snippet("Deskripsi Lokasi Contoh")
+            markerOptions.snippet("Unique and Iconic History place")
             mMap.addMarker(markerOptions)
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 12f))
@@ -98,6 +99,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             5 -> "Malioboro Street"
             6 -> "Borobudur Temple"
             else -> "Unknown Location"
+        }
+    }
+
+    private fun RelationToAnotherActivities() {
+        binding.apply {
+            val intent = Intent(this@MapsActivity, HomeDetailActivity::class.java)
+            startActivity(intent)
         }
     }
 
