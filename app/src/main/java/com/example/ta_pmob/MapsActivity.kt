@@ -25,8 +25,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+
     private var locationIdToShow: Int = -1
     private var dataWisata: String? = null
+
     private val locationDataList = mutableListOf<LocationData>()
     private val RecommendationDataList = mutableListOf<RecommendationData>()
 
