@@ -14,9 +14,14 @@ import com.google.firebase.database.ValueEventListener
 class HomeDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeDetailBinding
+
     private val dataRef = FirebaseDatabase
         .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
         .getReference("DataLocation")
+
+    private val sliderRef = FirebaseDatabase
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
+        .getReference("Recommendations")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +29,13 @@ class HomeDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val locationIdToShow = intent.getIntExtra(DATA_ID, -1)
+        val isRecommendationData = intent.getBooleanExtra(RECOMMENDATION_ID, false)
 
-        getDatafromDatabase(locationIdToShow)
+        if(isRecommendationData) {
+            fetchDataFromRecommendations(locationIdToShow)
+        } else {
+            fetchDataFromDataLocation(locationIdToShow)
+        }
 
         binding.apply {
             fabGoToMaps.setOnClickListener {
@@ -47,7 +57,7 @@ class HomeDetailActivity : AppCompatActivity() {
 
     }
 
-    fun getDatafromDatabase(locationIdToShow: Int?) {
+    fun fetchDataFromDataLocation(locationIdToShow: Int?) {
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (locationSnapshot in snapshot.children) {
@@ -67,6 +77,48 @@ class HomeDetailActivity : AppCompatActivity() {
                                 "dataDescription: $dataDescription, " +
                                 "dataRating: $dataRating, " +
                                 "LocationId: $locationIdToShow")
+
+                    if (imageId != null && imageId == locationIdToShow) {
+                        binding.apply {
+                            tvDetailNamaWisata.text = dataWisata
+                            tvDetailNamaKota.text = dataKota
+                            tvDescription.text = dataDescription
+                            ratingTxt.text = dataRating.toString()
+                        }
+
+                        Glide.with(this@HomeDetailActivity)
+                            .load(photoUrl)
+                            .centerCrop()
+                            .fitCenter()
+                            .into(binding.ivMapsPhotos)
+
+                        launchMapsActivity(
+                            imageId,
+                            dataWisata.toString(),
+                            dataKota.toString(),
+                            dataDescription.toString(),
+                            dataRating,
+                        )
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDetailActivity", "Error fetching data: ${error.message}")
+            }
+        })
+    }
+
+    fun fetchDataFromRecommendations(locationIdToShow: Int?) {
+        sliderRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (locationSnapshot in snapshot.children) {
+                    val imageId = locationSnapshot.child("imageId").getValue(Int::class.java)
+                    val dataWisata = locationSnapshot.child("namaWisata").getValue(String::class.java)
+                    val dataKota = locationSnapshot.child("namaKota").getValue(String::class.java)
+                    val dataDescription = locationSnapshot.child("description").getValue(String::class.java)
+                    val dataRating = locationSnapshot.child("rating").getValue(Float::class.java)
+                    val photoUrl = locationSnapshot.child("photoUrl").getValue(String::class.java)
 
                     if (imageId != null && imageId == locationIdToShow) {
                         binding.apply {
@@ -122,6 +174,7 @@ class HomeDetailActivity : AppCompatActivity() {
         const val DATA_DESCRIPTION = "data_description"
         const val DATA_RATING = "data_rating"
         const val DATA_PHOTOS = "data_photos"
+        const val RECOMMENDATION_ID = "recommendation_id"
     }
 
 }

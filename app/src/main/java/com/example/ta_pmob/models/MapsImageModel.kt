@@ -7,6 +7,8 @@ data class MapsImageModel(
     val namaWisata: String,
     val namaKota: String,
     val photoUrl: String,
+    val latitude: Double,
+    val longitude: Double,
     val description: String,
     val rating: Float
 
@@ -17,6 +19,8 @@ data class MapsImageModel(
         namaWisata = "",
         namaKota = "",
         description = "",
-        rating = 0.0f
+        rating = 0.0f,
+        latitude = 0.0,
+        longitude = 0.0
     )
 }

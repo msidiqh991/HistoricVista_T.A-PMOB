@@ -31,6 +31,10 @@ class HomeActivity : AppCompatActivity() {
         .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
         .getReference("DataLocation")
 
+    private val RecommendationSlider = FirebaseDatabase
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
+        .getReference("Recommendations")
+
     private val params = LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -126,7 +130,7 @@ class HomeActivity : AppCompatActivity() {
     private fun showImageSlider() {
         viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
 
-        dataRef.addValueEventListener(object : ValueEventListener {
+        RecommendationSlider.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val imageList = mutableListOf<ImageItem>()
 
@@ -159,6 +163,7 @@ class HomeActivity : AppCompatActivity() {
                     val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
                     val locationIdToShow = imageItem.imageId
                     intent.putExtra(HomeDetailActivity.DATA_ID, locationIdToShow)
+                    intent.putExtra(HomeDetailActivity.RECOMMENDATION_ID, true)
                     startActivity(intent)
                 }
 

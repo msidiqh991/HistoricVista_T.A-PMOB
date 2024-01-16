@@ -1,9 +1,9 @@
 package com.example.ta_pmob
 
-import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ta_pmob.databinding.ActivityMapsBinding
@@ -13,6 +13,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.io.IOException
+import java.util.Locale
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -20,11 +26,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private var locationIdToShow: Int = -1
+    private var dataWisata: String? = null
+    private val locationDataList = mutableListOf<LocationData>()
+    private val RecommendationDataList = mutableListOf<RecommendationData>()
 
-    // Contoh daftar koordinat
-    private val listOfCoordinates = mutableListOf<LatLng>()
+    private val DBLocation = FirebaseDatabase
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
+        .getReference("DataLocation")
 
-    // Indeks yang menunjukkan koordinat yang akan ditampilkan
+    private val OtherCountry = FirebaseDatabase
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
+        .getReference("Recommendations")
+
     private var currentIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,32 +46,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Mendapatkan ID lokasi dari Intent (jika ada)
         locationIdToShow = intent.getIntExtra("LOCATION_ID", -1)
+        dataWisata = intent.getStringExtra(HomeDetailActivity.DATA_WISATA)
         Log.d("MapsActivity", "Received Location ID: $locationIdToShow")
-
-        // Isi daftar koordinat dengan beberapa lokasi
-        listOfCoordinates.add(LatLng(-7.74122437674232, 110.49272674467083))
-        listOfCoordinates.add(LatLng(-7.8295649,110.3957762))
-        listOfCoordinates.add(LatLng(-7.8006704, 110.3633676))
-        listOfCoordinates.add(LatLng(-7.7520, 110.4919))
-        listOfCoordinates.add(LatLng(-7.7975, 110.3687))
-        listOfCoordinates.add(LatLng(-7.7745, 110.4157))
-        listOfCoordinates.add(LatLng(-7.5616, 110.7266))
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        RelationToAnotherActivities()
+        getDataFromFirebase()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
         if (locationIdToShow != -1) {
-            val foundIndex = locationIdToShow - 1  // Adjust to 0-based index
-            if (foundIndex in 0 until listOfCoordinates.size) {
-                currentIndex = foundIndex
+            val foundIndexLocation = locationDataList.indexOfFirst {
+                it.imageId == locationIdToShow
+            }
+            val foundIndexRecommendation = RecommendationDataList.indexOfFirst {
+                it.imageId == locationIdToShow
+            }
+
+            if (foundIndexLocation != -1) {
+                currentIndex = foundIndexLocation
+            } else if (foundIndexRecommendation != -1) {
+                currentIndex = foundIndexRecommendation
             }
         }
 
@@ -70,47 +81,163 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+
+//    override fun onMapReady(googleMap: GoogleMap) {
+//        mMap = googleMap
+//        if (locationIdToShow != -1) {
+//            val foundIndex = locationIdToShow - 1
+//            if (foundIndex in 0 until locationDataList.size) {
+//                currentIndex = foundIndex
+//            }
+//        }
+//
+//        showMarkerForCurrentIndex()
+//
+//        mMap.setOnMarkerClickListener { marker ->
+//            Toast.makeText(this@MapsActivity, "Clicked on ${marker.title}", Toast.LENGTH_SHORT).show()
+//            false
+//        }
+//    }
+
+    private fun getDataFromFirebase() {
+        DBLocation.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (locationSnapshot in snapshot.children) {
+                    val imageId = locationSnapshot.child("imageId").getValue(Int::class.java)
+                    val dataWisata = locationSnapshot.child("namaWisata").getValue(String::class.java)
+                    val latitude = locationSnapshot.child("latitude").getValue(Double::class.java)
+                    val longitude = locationSnapshot.child("longitude").getValue(Double::class.java)
+
+                    if (imageId != null && latitude != null && longitude != null && dataWisata != null) {
+                        locationDataList.add(LocationData(imageId, latitude, longitude, dataWisata))
+                    }
+                }
+
+                if (locationIdToShow != -1) {
+                    val foundIndex = locationDataList.indexOfFirst {
+                        it.imageId == locationIdToShow
+                    }
+                    if (foundIndex != -1) {
+                        currentIndex = foundIndex
+                    }
+                }
+
+                showMarkerForCurrentIndex()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MapsActivity", "Error fetching data: ${error.message}")
+            }
+        })
+
+        OtherCountry.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (locationSnapshot in snapshot.children) {
+                    val imageId = locationSnapshot.child("imageId").getValue(Int::class.java)
+                    val dataWisata = locationSnapshot.child("namaWisata").getValue(String::class.java)
+                    val latitude = locationSnapshot.child("latitude").getValue(Double::class.java)
+                    val longitude = locationSnapshot.child("longitude").getValue(Double::class.java)
+
+                    if (imageId != null && latitude != null && longitude != null && dataWisata != null) {
+                        RecommendationDataList.add(RecommendationData(imageId, latitude, longitude, dataWisata))
+                    }
+                }
+
+                if (locationIdToShow != -1) {
+                    val foundIndex = RecommendationDataList.indexOfFirst {
+                        it.imageId == locationIdToShow
+                    }
+                    if (foundIndex != -1) {
+                        currentIndex = foundIndex
+                    }
+                }
+
+                showMarkerForCurrentIndex()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MapsActivity", "Error fetching data: ${error.message}")
+            }
+        })
+    }
+
+    private fun getLocationNameByCoordinates(latitude: Double, longitude: Double): String {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
+
+            if (!addresses.isNullOrEmpty()) {
+                val address = addresses[0]
+                return address.locality ?: "Unknown Location"
+            }
+        } catch (e: IOException) {
+            e.message
+        }
+        return "Unknown Location"
+    }
+
     private fun showMarkerForCurrentIndex() {
-        Log.d("MapsActivity", "Current Index: $currentIndex")
-        if (currentIndex >= 0 && currentIndex < listOfCoordinates.size) {
-            val currentCoordinate = listOfCoordinates[currentIndex]
-            val currentLocationName = getLocationNameByIndex(currentIndex)
+        val dataList: List<LocationData> = if (locationDataList.isNotEmpty()) {
+            locationDataList.map { it as LocationData }
+        } else if (RecommendationDataList.isNotEmpty()) {
+            RecommendationDataList.map { it as LocationData }
+        } else {
+            emptyList()
+        }
+
+        if (currentIndex >= 0 && currentIndex < dataList.size) {
+            val currentLocationData = dataList[currentIndex]
+            val currentCoordinate = LatLng(currentLocationData.latitude, currentLocationData.longitude)
+            val currentLocationDistrict = getLocationNameByCoordinates(
+                currentCoordinate.latitude,
+                currentCoordinate.longitude
+            )
 
             mMap.clear()
 
             val markerOptions = MarkerOptions()
                 .position(currentCoordinate)
-                .title(currentLocationName)
+                .title(currentLocationData.dataWisata)
+                .snippet(currentLocationDistrict)
 
-            markerOptions.snippet("Unique and Iconic History place")
             mMap.addMarker(markerOptions)
-
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 12f))
         }
     }
 
-    private fun getLocationNameByIndex(index: Int): String {
-        return when (index) {
-            0 -> "Candi Prambanan"
-            1 -> "Keraton Kotagede"
-            2 -> "Benteng Vredeburg"
-            3 -> "Taman Sari"
-            4 -> "Candi Ratu Boko"
-            5 -> "Malioboro Street"
-            6 -> "Borobudur Temple"
-            else -> "Unknown Location"
-        }
-    }
+//    private fun showMarkerForCurrentIndex() {
+//        if (currentIndex >= 0 && currentIndex < locationDataList.size) {
+//            val currentLocationData = locationDataList[currentIndex]
+//            val currentCoordinate = LatLng(currentLocationData.latitude, currentLocationData.longitude)
+//            val currentLocationDistrict = getLocationNameByCoordinates(
+//                currentCoordinate.latitude,
+//                currentCoordinate.longitude
+//            )
+//
+//            mMap.clear()
+//
+//            val markerOptions = MarkerOptions()
+//                .position(currentCoordinate)
+//                .title(currentLocationData.dataWisata)
+//                .snippet(currentLocationDistrict)
+//
+//            mMap.addMarker(markerOptions)
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 12f))
+//        }
+//    }
 
-    private fun RelationToAnotherActivities() {
-        binding.apply {
-            val intent = Intent(this@MapsActivity, HomeDetailActivity::class.java)
-            startActivity(intent)
-        }
-    }
+    data class LocationData(
+        val imageId: Int,
+        val latitude: Double,
+        val longitude: Double,
+        val dataWisata: String
+    )
 
-    fun showNextLocation(view: View) {
-        currentIndex = (currentIndex + 1) % listOfCoordinates.size
-        showMarkerForCurrentIndex()
-    }
+    data class RecommendationData(
+        val imageId: Int,
+        val latitude: Double,
+        val longitude: Double,
+        val dataWisata: String,
+    )
+
 }
