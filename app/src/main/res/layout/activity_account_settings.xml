@@ -30,10 +30,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp" />
 
-    <!-- Add more EditText fields for other data -->
+    <EditText
+        android:id="@+id/editTextFullname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="New Fullname"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonUpdate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@android:style/Widget.Button"
@@ -45,8 +54,7 @@
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:id="@+id/buttonUpdate"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFullname"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

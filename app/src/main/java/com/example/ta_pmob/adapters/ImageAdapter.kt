@@ -17,7 +17,7 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
 
     class DiffCallback : DiffUtil.ItemCallback<ImageItem>(){
         override fun areItemsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.imageId == newItem.imageId
         }
 
         override fun areContentsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
@@ -25,8 +25,9 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
         }
 
     }
-    inner class ViewHolder(iteView: View): RecyclerView.ViewHolder(iteView){
-        private val imageView = iteView.findViewById<ImageView>(R.id.imageView)
+
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        private val imageView = itemView.findViewById<ImageView>(R.id.imageView)
 
         init {
             itemView.setOnClickListener {
@@ -39,7 +40,7 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
 
         fun bindData(item: ImageItem){
             Glide.with(itemView)
-                .load(item.url)
+                .load(item.photoUrl)
                 .into(imageView)
         }
 
@@ -60,7 +61,4 @@ class ImageAdapter : ListAdapter<ImageItem,ImageAdapter.ViewHolder>(DiffCallback
     fun setOnImageItemClickListener(listener: (ImageItem) -> Unit) {
         onImageItemClickListener = listener
     }
-
-
-
 }

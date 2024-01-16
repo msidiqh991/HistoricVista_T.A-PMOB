@@ -8,17 +8,18 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.ta_pmob.adapters.AdapterMaps
 import com.example.ta_pmob.adapters.ImageAdapter
 import com.example.ta_pmob.databinding.ActivityHomeBinding
 import com.example.ta_pmob.models.ImageItem
 import com.example.ta_pmob.models.MapsImageModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.UUID
 
 class HomeActivity : AppCompatActivity() {
 
@@ -26,46 +27,65 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewPager2 : ViewPager2
     private lateinit var pageChangeListener: ViewPager2.OnPageChangeCallback
 
+    private val dataRef = FirebaseDatabase
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
+        .getReference("DataLocation")
+
+    private val RecommendationSlider = FirebaseDatabase
+        .getInstance("https://historicvista-1414-default-rtdb.firebaseio.com")
+        .getReference("Recommendations")
+
     private val params = LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT
     ).apply {
         setMargins(8,0,8,0)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // CardView Maps Nearby location section
-        binding.rvLocationList.layoutManager = LinearLayoutManager(this)
-        binding.rvLocationList.setHasFixedSize(true)
+        // RecyclerView Maps Nearby location section
+        val recyclerView: RecyclerView = binding.rvLocationList
+        val manager = LinearLayoutManager(this)
+        recyclerView.layoutManager = manager
+        recyclerView.setHasFixedSize(true)
+
+        NavigationBarBottom()
         showDataMaps()
         showImageSlider()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewPager2.unregisterOnPageChangeCallback(pageChangeListener)
+    private fun NavigationBarBottom() {
+        // Navigate to Another Activity
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navbar_bottom)
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.home_navBottom -> {
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.detailMaps_navBottom -> {
+                    val intent = Intent(this, HomeDetailActivity::class.java)
+                    startActivity(intent)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.profile_navBottom -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun showDataMaps() {
-        val dataRef =  FirebaseDatabase.getInstance("https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app/")
-            .getReference("Bioskop")
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val locationList = mutableListOf<MapsImageModel>()
                 val adapter = AdapterMaps(locationList)
-
-                // Redirect to ActivityHomeDetail by Maps Location
-                adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        val selectedLocation = locationList[position]
-                        val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
-                        intent.putExtra("locationData", selectedLocation)
-                        startActivity(intent)
-                    }
-                })
 
                 for(dataSnapshot in snapshot.children) {
                     val locationKey = dataSnapshot.getValue(MapsImageModel::class.java)
@@ -77,86 +97,106 @@ class HomeActivity : AppCompatActivity() {
 
                 if(locationList.isNotEmpty()) {
                     binding.rvLocationList.adapter = adapter
+
+                    adapter.setOnItemClickListener(object : AdapterMaps.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            val locationIdToShow = locationList[position].imageId
+                            navigateToHomeDetail(locationIdToShow)
+                        }
+                    })
                 } else {
                     Toast.makeText(this@HomeActivity, "Data tidak tersedia", Toast.LENGTH_LONG).show()
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("Ada kesalahan pada database", "${error.message}")
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewPager2.unregisterOnPageChangeCallback(pageChangeListener)
+    }
+
+    private fun navigateToHomeDetail(locationIdToShow: Int?) {
+        val intent = Intent(this, HomeDetailActivity::class.java)
+        intent.putExtra(HomeDetailActivity.DATA_ID, locationIdToShow)
+        startActivity(intent)
     }
 
     private fun showImageSlider() {
         viewPager2 = findViewById<ViewPager2>(R.id.viewpager2)
 
-        val imageList = arrayListOf(
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/866/500/500.jpg?hmac=FOptChXpmOmfR5SpiL2pp74Yadf1T_bRhBF1wJZa9hg"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/270/500/500.jpg?hmac=MK7XNrBrZ73QsthvGaAkiNoTl65ZDlUhEO-6fnd-ZnY"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/320/500/500.jpg?hmac=2iE7TIF9kIqQOHrIUPOJx2wP1CJewQIZBeMLIRrm74s"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/798/500/500.jpg?hmac=Bmzk6g3m8sUiEVHfJWBscr2DUg8Vd2QhN7igHBXLLfo"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/95/500/500.jpg?hmac=0aldBQ7cQN5D_qyamlSP5j51o-Og4gRxSq4AYvnKk2U"
-            ),
-            ImageItem(
-                UUID.randomUUID().toString(),
-                "https://fastly.picsum.photos/id/778/500/500.jpg?hmac=jZLZ6WV_OGRxAIIYPk7vGRabcAGAILzxVxhqSH9uLas"
-            )
-        )
+        RecommendationSlider.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val imageList = mutableListOf<ImageItem>()
 
-        val imageAdapter = ImageAdapter()
-        viewPager2.adapter = imageAdapter
-        imageAdapter.submitList(imageList)
+                for (dataSnapshot in snapshot.children) {
+                    val imageId = dataSnapshot.child("imageId").getValue(Int::class.java)
+                    val photoUrl = dataSnapshot.child("photoUrl").getValue(String::class.java)
+                    val namaWisata = dataSnapshot.child("namaWisata").getValue(String::class.java)
+                    val namaKota = dataSnapshot.child("namaKota").getValue(String::class.java)
 
-        imageAdapter.setOnImageItemClickListener { imageItem ->
-            // Redirect ke HomeDetailActivity dengan membawa data dari item yang diklik
-            val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
-            intent.putExtra("imageData", imageItem)
-            startActivity(intent)
-        }
-
-        val slideDotLL = findViewById<LinearLayout>(R.id.slideDotLL)
-        val dotsImage = Array(imageList.size) { ImageView(this) }
-
-        dotsImage.forEach {
-            it.setImageResource(
-                R.drawable.non_active_dot
-            )
-            slideDotLL.addView(it,params)
-        }
-
-        dotsImage[0].setImageResource(R.drawable.active_dot)
-
-        pageChangeListener = object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                dotsImage.mapIndexed { index, imageView ->
-                    if (position == index){
-                        imageView.setImageResource(
-                            R.drawable.active_dot
+                    val imageItem = imageId?.let {
+                        ImageItem(
+                            it,
+                            photoUrl.toString(),
+                            namaWisata.toString(),
+                            namaKota.toString(),
                         )
-                    } else{
-                        imageView.setImageResource(R.drawable.non_active_dot)
                     }
 
+                    if (imageItem != null) {
+                        imageList.add(imageItem)
+                    }
                 }
-                super.onPageSelected(position)
+
+                val imageAdapter = ImageAdapter()
+                viewPager2.adapter = imageAdapter
+                imageAdapter.submitList(imageList)
+
+                imageAdapter.setOnImageItemClickListener { imageItem ->
+                    // Redirect ke HomeDetailActivity dengan membawa data dari item yang diklik
+                    val intent = Intent(this@HomeActivity, HomeDetailActivity::class.java)
+                    val locationIdToShow = imageItem.imageId
+                    intent.putExtra(HomeDetailActivity.DATA_ID, locationIdToShow)
+                    intent.putExtra(HomeDetailActivity.RECOMMENDATION_ID, true)
+                    startActivity(intent)
+                }
+
+                val slideDotLL = findViewById<LinearLayout>(R.id.slideDotLL)
+                val dotsImage = Array(imageList.size) { ImageView(this@HomeActivity) }
+
+                dotsImage.forEach {
+                    it.setImageResource(R.drawable.non_active_dot)
+                    slideDotLL.addView(it, params)
+                }
+
+                dotsImage[0].setImageResource(R.drawable.active_dot)
+
+                pageChangeListener = object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        dotsImage.mapIndexed { index, imageView ->
+                            if (position == index) {
+                                imageView.setImageResource(R.drawable.active_dot)
+                            } else {
+                                imageView.setImageResource(R.drawable.non_active_dot)
+                            }
+                        }
+                        super.onPageSelected(position)
+                    }
+                }
+                viewPager2.registerOnPageChangeCallback(pageChangeListener)
             }
-        }
-        viewPager2.registerOnPageChangeCallback(pageChangeListener)
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle onCancelled if needed
+            }
+        })
+
     }
 
 }
