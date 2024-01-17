@@ -1,6 +1,6 @@
 # HistoricVista
 
-![image](https://github.com/msidiqh991/HistoricVista_T.A-PMOB/tree/master/.idea/img/Mockup_HistoricVista.png)
+![image](https://github.com/msidiqh991/HistoricVista_T.A-PMOB/blob/master/.idea/img/Mockup_HistoricVistaa.png)
 
 
 ## Description
