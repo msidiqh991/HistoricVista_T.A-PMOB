@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "563765064849",
-    "firebase_url": "https://pmob-pert9-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "pmob-pert9",
-    "storage_bucket": "pmob-pert9.appspot.com"
+    "project_number": "165914088117",
+    "firebase_url": "https://historicvista-1414-default-rtdb.firebaseio.com",
+    "project_id": "historicvista-1414",
+    "storage_bucket": "historicvista-1414.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:563765064849:android:1e11a95ce6f3e5857b7b30",
+        "mobilesdk_app_id": "1:165914088117:android:a0adc59b53ac9895a564fc",
         "android_client_info": {
           "package_name": "com.example.ta_pmob"
         }
       },
       "oauth_client": [
         {
-          "client_id": "563765064849-0d3rlv0ddmehrtg5ujoppogbj9obcdgk.apps.googleusercontent.com",
+          "client_id": "165914088117-ma8r6uk1ibb4q47bml0h9j945h296biq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyABQNidv_XnchcFQTnkakMQaO4D6XOxhsc"
+          "current_key": "AIzaSyBzn_6L8KiVVWISKfTPu6gpzSToqM5NZ5s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "563765064849-0d3rlv0ddmehrtg5ujoppogbj9obcdgk.apps.googleusercontent.com",
+              "client_id": "165914088117-ma8r6uk1ibb4q47bml0h9j945h296biq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

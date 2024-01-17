@@ -167,7 +167,7 @@ class HomeDetailActivity : AppCompatActivity() {
         intent.putExtra(DATA_RATING, dataRating?: 0.0f)
         startActivity(intent)
     }
-    
+
     companion object {
         const val DATA_ID = "data_id"
         const val DATA_WISATA = "data_wisata"

@@ -83,24 +83,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
-//    override fun onMapReady(googleMap: GoogleMap) {
-//        mMap = googleMap
-//        if (locationIdToShow != -1) {
-//            val foundIndex = locationIdToShow - 1
-//            if (foundIndex in 0 until locationDataList.size) {
-//                currentIndex = foundIndex
-//            }
-//        }
-//
-//        showMarkerForCurrentIndex()
-//
-//        mMap.setOnMarkerClickListener { marker ->
-//            Toast.makeText(this@MapsActivity, "Clicked on ${marker.title}", Toast.LENGTH_SHORT).show()
-//            false
-//        }
-//    }
-
     private fun getDataFromFirebase() {
         DBLocation.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -206,27 +188,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 12f))
         }
     }
-
-//    private fun showMarkerForCurrentIndex() {
-//        if (currentIndex >= 0 && currentIndex < locationDataList.size) {
-//            val currentLocationData = locationDataList[currentIndex]
-//            val currentCoordinate = LatLng(currentLocationData.latitude, currentLocationData.longitude)
-//            val currentLocationDistrict = getLocationNameByCoordinates(
-//                currentCoordinate.latitude,
-//                currentCoordinate.longitude
-//            )
-//
-//            mMap.clear()
-//
-//            val markerOptions = MarkerOptions()
-//                .position(currentCoordinate)
-//                .title(currentLocationData.dataWisata)
-//                .snippet(currentLocationDistrict)
-//
-//            mMap.addMarker(markerOptions)
-//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 12f))
-//        }
-//    }
 
     data class LocationData(
         val imageId: Int,
