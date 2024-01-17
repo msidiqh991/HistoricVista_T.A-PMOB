@@ -38,8 +38,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun tampilData() {
         // Menambahkan ValueEventListener ke referensi database
         databaseReference.addValueEventListener(object : ValueEventListener {
@@ -49,7 +47,7 @@ class ProfileActivity : AppCompatActivity() {
                     val nama = data.child("nama").value.toString()
 
                     binding.apply {
-                        textView.text = nama
+                        tvFullname.text = nama
                     }
 
                     Log.d("DataUser", "Nama: $nama")
@@ -63,7 +61,6 @@ class ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Ambil informasi pengguna yang sudah login
         val user = auth.currentUser
         if (user != null) {
             val userEmail = user.email
@@ -71,7 +68,6 @@ class ProfileActivity : AppCompatActivity() {
             binding.apply {
                 textView2.text = userEmail
             }
-
         } else {
             Toast.makeText(this@ProfileActivity, "Ada kesalahan dalam melakukan Login", Toast.LENGTH_SHORT).show()
         }
