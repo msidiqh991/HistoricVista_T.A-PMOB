@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                                 hideProgressBar()
                             }, 2000)
                         } else {
-                            Toast.makeText(baseContext, "Authentication Failed, Incorrect email/password", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(baseContext, "Auth Failed : Incorrect email/password", Toast.LENGTH_SHORT).show()
                             Log.e("LoginActivity", "Authentication failed", task.exception)
                         }
                     }
