@@ -7,11 +7,11 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ta_pmob.HomeActivity
 import com.example.ta_pmob.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize Progress Bar
+        // Initialize Progress Bars
         progressBar = binding.progressBar
 
         auth = FirebaseAuth.getInstance()
