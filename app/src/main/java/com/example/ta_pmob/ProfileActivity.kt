@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ta_pmob.authentication.RegisterActivity
 import com.example.ta_pmob.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -33,7 +32,13 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, AccountSettingsActivity::class.java)
             startActivity(intent)
         }
+        binding.backToHomepage.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+
 
     private fun tampilData() {
         // Menambahkan ValueEventListener ke referensi database
