@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- State when item is pressed or selected -->
+<<<<<<< HEAD
     <item android:color="@color/primary_color" android:state_checked="true" />
     <!-- Default state -->
     <item android:color="@color/black" />
+=======
+    <item android:color="@color/primary_color_variant" android:state_checked="true" />
+    <!-- Default state -->
+    <item android:color="@color/white" />
+>>>>>>> d3ecbf5c51e558f074645cba182d96d3d1e1e096
 </selector>

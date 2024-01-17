@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ta_pmob.HomeActivity
 import com.example.ta_pmob.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,46 +27,41 @@ class LoginActivity : AppCompatActivity() {
         // Initialize Progress Bar
         progressBar = binding.progressBar
 
-        binding.btnLoginHome.setOnClickListener {
-            showProgressBar()
+        auth = FirebaseAuth.getInstance()
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                hideProgressBar()
-            }, 2000)
+        binding.btnLoginHome.setOnClickListener {
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                // Proses login menggunakan Firebase Authentication
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Login berhasil
+                            showProgressBar()
+
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                val intent = Intent(this, HomeActivity::class.java)
+                                startActivity(intent)
+                                hideProgressBar()
+                            }, 2000)
+                        } else {
+                            // Login gagal
+                            Toast.makeText(baseContext, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                            Log.e("LoginActivity", "Authentication failed", task.exception)
+                        }
+                    }
+            } else {
+                // Menangani kasus di mana email atau password kosong
+                Toast.makeText(baseContext, "Email and password cannot be empty.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.tvHaventAccount.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
-
-
-
-        //        binding.btnLoginHome.setOnClickListener {
-//            val email = binding.etEmail.text.toString()
-//            val password = binding.etPassword.text.toString()
-//
-//            if (email.isNotEmpty() && password.isNotEmpty()) {
-//                // Proses login menggunakan Firebase Authentication
-//                auth.signInWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this) { task ->
-//                        if (task.isSuccessful) {
-//                            // Login berhasil
-//                            startActivity(Intent(this, HomeActivity::class.java))
-//                            finish()
-//                        } else {
-//                            // Login gagal
-//                            Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//            } else {
-//                // Menangani kasus di mana email atau password kosong
-//                Toast.makeText(baseContext, "Email and password cannot be empty.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
 
     }
 

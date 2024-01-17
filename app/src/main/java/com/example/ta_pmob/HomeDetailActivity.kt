@@ -25,6 +25,7 @@ class HomeDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityHomeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -166,7 +167,7 @@ class HomeDetailActivity : AppCompatActivity() {
         intent.putExtra(DATA_RATING, dataRating?: 0.0f)
         startActivity(intent)
     }
-    
+
     companion object {
         const val DATA_ID = "data_id"
         const val DATA_WISATA = "data_wisata"
